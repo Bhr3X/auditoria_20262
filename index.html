@@ -1,0 +1,246 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Veredito do 2º Turno</title>
+<meta name="description" content="Auditoria visual das hipóteses de fraude no 2º turno presidencial de 2026: o que os dados do TSE excluem, o que fica fora do alcance deles e o que é provável.">
+<style>
+:root {
+  --font-anthropic-sans: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --font-anthropic-serif: Georgia, "Iowan Old Style", "Times New Roman", serif;
+  --cds-font-size-caption: 12px; --cds-font-size-body: 14px; --cds-font-size-heading: 15px; --cds-font-size-title: 26px;
+  --cds-font-weight-medium: 600;
+  --cds-gap-xs: 4px; --cds-gap-sm: 8px; --cds-gap-md: 14px; --cds-gap-lg: 22px; --cds-gap-xl: 32px;
+  --cds-pad-xs: 6px; --cds-pad-sm: 10px; --cds-pad-md: 12px; --cds-pad-lg: 18px; --cds-pad-xl: 28px;
+  --cds-radius: 8px; --cds-dur-slow: 320ms; --cds-ease-out: cubic-bezier(.2, .8, .2, 1);
+  --color-fg: #1f1e1b; --color-fg-muted: #6c6a64; --color-bg: #f7f6f2; --color-panel: #ffffff; --color-border-line: #e4e1d9;
+  --color-ok: #2e7d4f; --color-warn: #a86400; --color-bad: #c0392b;
+  --cds-chart-1: #2f6db5; --cds-chart-2: #c8682a; --cds-chart-3: #5b8c3a; --cds-chart-4: #8a5cb8; --cds-chart-5: #b5476b; --cds-chart-6: #3a9a9a; --cds-chart-7: #8c7a3a; --cds-chart-8: #6b6b6b;
+  --cds-chart-muted: #b9b5ac; --cds-chart-grid: #eeece6; --cds-chart-axis: #c9c5bc; --cds-chart-reference: #9c988f; --cds-chart-status-critical: #c0392b;
+  --cds-surface-popover: #ffffff; --cds-border: #dedad1; --cds-shadow-popover: 0 6px 22px rgba(0, 0, 0, .12); --cds-text-secondary: #6c6a64;
+  color-scheme: light;
+}
+html, body { margin: 0; background: var(--color-bg); color: var(--color-fg); font-family: var(--font-anthropic-sans); font-size: var(--cds-font-size-body); }
+#dash-root { max-width: 1240px; margin: 0 auto; padding: 28px 16px 48px; }
+.dash-skeleton { color: transparent !important; position: relative; }
+.dash-skeleton:empty { display: block; min-height: 120px; border-radius: var(--cds-radius); background: var(--cds-chart-grid); }
+span.dash-skeleton, b.dash-skeleton { display: inline-block; min-width: 2.5em; border-radius: 4px; background: var(--cds-chart-grid); }
+.vx-foot { margin-top: var(--cds-gap-xl); font-size: var(--cds-font-size-caption); color: var(--color-fg-muted); }
+</style>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.9.0/d3.min.js"></script>
+</head>
+<body>
+<div id="dash-root">
+<style>
+#dash-root .vx { position: relative; font-family: var(--font-anthropic-sans); color: var(--color-fg); }
+.vx * { box-sizing: border-box; }
+.vx-head { display: grid; gap: var(--cds-gap-xs); }
+.vx-kicker { font-size: var(--cds-font-size-caption); color: var(--color-fg-muted); letter-spacing: .02em; }
+.vx-title { margin: 0; font-family: var(--font-anthropic-serif); font-weight: 400; font-size: var(--cds-font-size-title); line-height: 1.15; }
+.vx-take { margin: 0; font-size: var(--cds-font-size-body); color: var(--color-fg-muted); max-width: 62rem; line-height: 1.5; }
+.vx-take b { color: var(--color-fg); font-weight: var(--cds-font-weight-medium); font-variant-numeric: tabular-nums; }
+.vx-tabs { display: flex; gap: var(--cds-gap-xs); margin: var(--cds-gap-lg) 0 var(--cds-gap-lg); border-bottom: 1px solid var(--color-border-line); overflow-x: auto; }
+.vx-tab { appearance: none; background: none; border: 0; border-bottom: 2px solid transparent; margin-bottom: -1px; padding: var(--cds-pad-sm) var(--cds-pad-md); font: inherit; font-size: var(--cds-font-size-body); color: var(--color-fg-muted); cursor: pointer; white-space: nowrap; }
+.vx-tab:hover { color: var(--color-fg); }
+.vx-tab[aria-selected="true"] { color: var(--color-fg); border-bottom-color: var(--color-fg); font-weight: var(--cds-font-weight-medium); }
+.vx-page[hidden] { display: none; }
+.vx-stack { display: grid; gap: var(--cds-gap-lg); }
+.vx-grid { display: grid; gap: var(--cds-gap-md); grid-template-columns: repeat(auto-fit, minmax(min(100%, 22rem), 1fr)); }
+.vx-card { background: var(--color-panel); border: 1px solid var(--color-border-line); border-radius: var(--cds-radius); padding: var(--cds-pad-lg); min-width: 0; }
+.vx-card-h { display: flex; align-items: baseline; gap: var(--cds-gap-sm); margin: 0 0 var(--cds-gap-xs); }
+.vx-h { margin: 0; font-size: var(--cds-font-size-heading); font-weight: var(--cds-font-weight-medium); line-height: 1.3; }
+.vx-note { margin: 0 0 var(--cds-gap-md); font-size: var(--cds-font-size-caption); color: var(--color-fg-muted); line-height: 1.45; }
+.vx-sec { margin: var(--cds-gap-md) 0 var(--cds-gap-sm); display: flex; align-items: baseline; gap: var(--cds-gap-sm); flex-wrap: wrap; }
+.vx-sec-n { font-family: var(--font-anthropic-serif); font-size: var(--cds-font-size-title); line-height: 1; color: var(--color-fg-muted); }
+.vx-sec-t { font-size: var(--cds-font-size-heading); font-weight: var(--cds-font-weight-medium); }
+.vx-sec-q { font-size: var(--cds-font-size-caption); color: var(--color-fg-muted); }
+/* KPIs */
+.vx-kpis { display: grid; gap: var(--cds-gap-md); grid-template-columns: repeat(auto-fit, minmax(min(100%, 9.5rem), 1fr)); }
+.vx-kpi { background: var(--color-panel); border: 1px solid var(--color-border-line); border-radius: var(--cds-radius); padding: var(--cds-pad-md) var(--cds-pad-lg); display: grid; gap: 2px; align-content: start; border-top-width: 3px; }
+.vx-kpi.ok { border-top-color: var(--color-ok); } .vx-kpi.imp { border-top-color: color-mix(in srgb, var(--color-ok) 55%, var(--color-warn)); } .vx-kpi.warn { border-top-color: var(--color-warn); } .vx-kpi.bad { border-top-color: var(--color-bad); }
+.vx-kpi-l { font-size: var(--cds-font-size-caption); color: var(--color-fg-muted); }
+.vx-kpi-v { font-family: var(--font-anthropic-serif); font-weight: 400; font-size: var(--cds-font-size-title); line-height: 1.1; font-variant-numeric: tabular-nums; }
+.vx-kpi-s { font-size: var(--cds-font-size-caption); color: var(--color-fg-muted); }
+/* matriz */
+.vx-mxwrap { container-type: inline-size; }
+.vx-mx { display: grid; grid-template-columns: minmax(6.5rem, .7fr) 1.5fr repeat(3, minmax(0, 1fr)); gap: 6px; }
+.vx-mx-h { display: flex; align-items: baseline; justify-content: space-between; gap: 6px; padding: 6px 10px; border-radius: var(--cds-radius); font-weight: var(--cds-font-weight-medium); font-size: var(--cds-font-size-body); cursor: help; }
+.vx-mx-h.ok { color: var(--color-ok); background: color-mix(in srgb, var(--color-ok) 12%, transparent); }
+.vx-mx-h.imp { color: color-mix(in srgb, var(--color-ok) 55%, var(--color-warn)); background: color-mix(in srgb, var(--color-ok) 6%, color-mix(in srgb, var(--color-warn) 8%, transparent)); }
+.vx-mx-h.warn { color: var(--color-warn); background: color-mix(in srgb, var(--color-warn) 12%, transparent); }
+.vx-mx-h.bad { color: var(--color-bad); background: color-mix(in srgb, var(--color-bad) 10%, transparent); }
+.vx-mx-n { font-family: var(--font-anthropic-serif); font-size: var(--cds-font-size-title); font-weight: 400; line-height: 1; font-variant-numeric: tabular-nums; }
+.vx-mx-st { padding: 6px 4px; display: grid; align-content: center; gap: 1px; border-top: 1px solid var(--color-border-line); }
+.vx-mx-st b { font-size: var(--cds-font-size-body); font-weight: var(--cds-font-weight-medium); }
+.vx-mx-st span { font-size: var(--cds-font-size-caption); color: var(--color-fg-muted); line-height: 1.3; }
+.vx-mx-c { display: flex; flex-wrap: wrap; align-content: flex-start; gap: 4px; padding: 6px 0; border-top: 1px solid var(--color-border-line); min-height: 2.6rem; }
+.vx-mx-c.vazio::after { content: ""; flex: 1; align-self: stretch; min-height: 1.6rem; border: 1px dashed var(--color-border-line); border-radius: var(--cds-radius); }
+.vx-chip { appearance: none; font: inherit; font-size: var(--cds-font-size-caption); line-height: 1.3; text-align: left; display: inline-flex; gap: 6px; align-items: baseline; padding: 4px 8px; border-radius: var(--cds-radius); cursor: pointer; color: var(--color-fg); max-width: 100%; }
+.vx-chip.ok { background: color-mix(in srgb, var(--color-ok) 12%, transparent); border: 1px solid color-mix(in srgb, var(--color-ok) 35%, transparent); }
+.vx-chip.imp { background: color-mix(in srgb, var(--color-ok) 7%, color-mix(in srgb, var(--color-warn) 9%, transparent)); border: 1px solid color-mix(in srgb, color-mix(in srgb, var(--color-ok) 55%, var(--color-warn)) 50%, transparent); }
+.vx-chip.warn { background: color-mix(in srgb, var(--color-warn) 14%, transparent); border: 1px solid color-mix(in srgb, var(--color-warn) 45%, transparent); }
+.vx-chip.bad { background: color-mix(in srgb, var(--color-bad) 12%, transparent); border: 1px solid color-mix(in srgb, var(--color-bad) 40%, transparent); }
+.vx-chip:hover, .vx-chip:focus-visible { outline: 2px solid var(--color-fg); outline-offset: 1px; }
+.vx-chip .id { font-variant-numeric: tabular-nums; font-weight: var(--cds-font-weight-medium); white-space: nowrap; }
+.vx-chip .vx-g { color: var(--color-fg-muted); align-self: center; }
+.vx-g { display: inline-block; flex: none; width: 9px; height: 9px; border-radius: 50%; border: 1.5px solid currentColor; vertical-align: -1px; }
+.vx-g.d { background: currentColor; } .vx-g.e { background: linear-gradient(90deg, currentColor 50%, transparent 50%); } .vx-g.f { border-style: dotted; }
+@container (max-width: 34rem) { .vx-chip .nm { display: none; } .vx-mx { grid-template-columns: minmax(4.5rem, .9fr) repeat(4, minmax(0, 1fr)); } .vx-mx-st span { display: none; } .vx-mx-h { flex-direction: column; align-items: flex-start; gap: 2px; padding: 6px 6px; font-size: 11px; letter-spacing: -.01em; min-width: 0; overflow-wrap: anywhere; } }
+.vx-leg { display: flex; flex-wrap: wrap; gap: 4px 14px; font-size: var(--cds-font-size-caption); color: var(--color-fg-muted); margin-top: var(--cds-gap-sm); }
+.vx-leg span { display: inline-flex; align-items: center; gap: 6px; }
+.vx-leg i { display: inline-block; width: 10px; height: 10px; border-radius: 3px; }
+.vx-leg i.ln { height: 2px; border-radius: 1px; width: 14px; }
+.vx-leg i.dash { height: 0; width: 14px; border-top: 2px dashed; border-radius: 0; }
+.vx-leg i.ring { border: 2px solid; background: transparent !important; border-radius: 50%; }
+.vx-leg i.dot { border-radius: 50%; }
+.vx-leg [data-tip] { cursor: help; text-decoration: underline dotted; text-underline-offset: 3px; }
+/* svg */
+.vx-svg { display: block; overflow: visible; }
+.vx-svg text { font-family: var(--font-anthropic-sans); font-size: 11px; fill: var(--color-fg-muted); font-variant-numeric: tabular-nums; }
+.vx-svg text.fg { fill: var(--color-fg); }
+.vx-svg text.st { fill: var(--color-fg); font-weight: var(--cds-font-weight-medium); }
+.vx-svg text.in { fill: var(--color-bg); font-weight: var(--cds-font-weight-medium); }
+.vx-svg text.bad { fill: var(--color-bad); }
+.vx-svg .hit { fill: transparent; cursor: default; }
+.vx-svg .row:hover .hit, .vx-svg .row:focus .hit { fill: var(--cds-chart-grid); }
+.vx-svg .row { outline: none; }
+.vx-svg .pick { cursor: pointer; }
+/* provas */
+.vx-proofs { display: grid; gap: var(--cds-gap-md); grid-template-columns: repeat(auto-fill, minmax(min(100%, 23rem), 1fr)); }
+.vx-proof { display: flex; flex-direction: column; gap: var(--cds-gap-sm); scroll-margin-top: 16px; }
+.vx-proof.flash { animation: none; }
+@media (prefers-reduced-motion: no-preference) { .vx-proof.flash { animation: vxflash 1.6s var(--cds-ease-out) 1; } @keyframes vxflash { 0% { box-shadow: 0 0 0 3px var(--color-fg); } 100% { box-shadow: 0 0 0 0 transparent; } } }
+.vx-proof-h { display: flex; align-items: flex-start; gap: var(--cds-gap-sm); }
+.vx-proof-h .id { font-family: var(--font-anthropic-serif); font-size: var(--cds-font-size-heading); color: var(--color-fg-muted); line-height: 1.3; font-variant-numeric: tabular-nums; }
+.vx-proof-h h3 { margin: 0; flex: 1; font-size: var(--cds-font-size-heading); font-weight: var(--cds-font-weight-medium); line-height: 1.3; }
+.vx-info { appearance: none; flex: none; width: 22px; height: 22px; border-radius: 50%; border: 1px solid var(--color-border-line); background: transparent; color: var(--color-fg-muted); font: inherit; font-size: 12px; font-style: italic; font-family: var(--font-anthropic-serif); cursor: help; line-height: 1; padding: 0; }
+.vx-info:hover, .vx-info:focus-visible { color: var(--color-fg); border-color: var(--color-fg); outline: none; }
+.vx-badges { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
+.vx-pill { font-size: var(--cds-font-size-caption); font-weight: var(--cds-font-weight-medium); padding: 2px 8px; border-radius: 999px; cursor: help; }
+.vx-pill.ok { color: var(--color-ok); background: color-mix(in srgb, var(--color-ok) 13%, transparent); }
+.vx-pill.imp { color: color-mix(in srgb, var(--color-ok) 55%, var(--color-warn)); background: color-mix(in srgb, var(--color-ok) 7%, color-mix(in srgb, var(--color-warn) 9%, transparent)); }
+.vx-pill.warn { color: var(--color-warn); background: color-mix(in srgb, var(--color-warn) 15%, transparent); }
+.vx-pill.bad { color: var(--color-bad); background: color-mix(in srgb, var(--color-bad) 13%, transparent); }
+.vx-fz { display: inline-flex; align-items: center; gap: 5px; font-size: var(--cds-font-size-caption); color: var(--color-fg-muted); cursor: help; }
+.vx-fz span { text-decoration: underline dotted; text-underline-offset: 3px; }
+.vx-frase { margin: 0; font-size: var(--cds-font-size-body); line-height: 1.45; }
+.vx-viz { min-height: 120px; }
+.vx-viz.dash-skeleton { min-height: 160px; }
+.vx-regua { margin-top: auto; padding-top: var(--cds-gap-sm); border-top: 1px solid var(--color-border-line); display: grid; gap: 6px; cursor: help; }
+.vx-regua-l { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 8px; font-size: var(--cds-font-size-caption); color: var(--color-fg-muted); }
+.vx-regua-l b { color: var(--color-fg); font-weight: var(--cds-font-weight-medium); font-variant-numeric: tabular-nums; }
+.vx-regua-l .r { margin-left: auto; }
+.vx-bar { position: relative; height: 8px; border-radius: 4px; background: var(--cds-chart-grid); overflow: hidden; }
+.vx-bar i { position: absolute; left: 0; top: 0; bottom: 0; border-radius: 4px; min-width: 2px; }
+.vx-bar::after { content: ""; position: absolute; right: 0; top: 0; bottom: 0; width: 3px; background: var(--cds-chart-status-critical); }
+.vx-lac { display: flex; flex-wrap: wrap; align-items: stretch; gap: 6px; }
+.vx-lac-p { flex: 1 1 7rem; padding: 8px 10px; border-radius: var(--cds-radius); font-size: var(--cds-font-size-caption); line-height: 1.35; display: grid; gap: 4px; align-content: start; }
+.vx-lac-p.ok { background: color-mix(in srgb, var(--color-ok) 9%, transparent); border: 1px solid color-mix(in srgb, var(--color-ok) 30%, transparent); }
+.vx-lac-p.fora { border: 1.5px dashed var(--color-warn); }
+.vx-lac-p small { font-size: var(--cds-font-size-caption); color: var(--color-fg-muted); }
+.vx-lac-p.fora small { color: var(--color-warn); }
+.vx-lac-a { align-self: center; color: var(--color-fg-muted); }
+.vx-fecha { margin: var(--cds-gap-sm) 0 0; font-size: var(--cds-font-size-caption); color: var(--color-fg-muted); }
+.vx-ufs { display: grid; grid-template-columns: repeat(auto-fill, minmax(3.1rem, 1fr)); gap: 4px; }
+.vx-uf { border-radius: var(--cds-radius); padding: 5px 4px; text-align: center; font-size: var(--cds-font-size-caption); display: grid; gap: 1px; cursor: default; }
+.vx-uf b { font-weight: var(--cds-font-weight-medium); color: var(--color-fg); }
+.vx-uf.ok { background: color-mix(in srgb, var(--color-ok) 11%, transparent); color: var(--color-ok); }
+.vx-uf.warn { background: color-mix(in srgb, var(--color-warn) 16%, transparent); color: var(--color-warn); }
+/* explorar */
+.vx-slice { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
+.vx-slice-n { font-family: var(--font-anthropic-serif); font-size: var(--cds-font-size-title); line-height: 1.15; }
+.vx-btn { appearance: none; font: inherit; font-size: var(--cds-font-size-caption); padding: 4px 10px; border-radius: 999px; border: 1px solid var(--color-border-line); background: transparent; color: var(--color-fg); cursor: pointer; }
+.vx-btn:hover, .vx-btn:focus-visible { border-color: var(--color-fg); outline: none; }
+.vx-btn[aria-pressed="true"] { background: var(--color-fg); color: var(--color-bg); border-color: var(--color-fg); }
+.vx-presets { display: flex; flex-wrap: wrap; gap: 6px; margin-top: var(--cds-gap-sm); }
+.vx-hero { display: grid; gap: var(--cds-gap-md); margin-top: var(--cds-gap-md); }
+.vx-hero4 { display: grid; gap: var(--cds-gap-md); grid-template-columns: repeat(auto-fit, minmax(min(100%, 11rem), 1fr)); }
+.vx-forest { min-height: 46px; max-width: 34rem; }
+.vx-hero4 .vx-kpi-v { font-size: calc(var(--cds-font-size-title) * .85); white-space: nowrap; }
+.vx-verd { font-size: var(--cds-font-size-caption); font-weight: var(--cds-font-weight-medium); }
+.vx-verd.ok { color: var(--color-ok); } .vx-verd.warn { color: var(--color-warn); }
+.vx-dimgrid { display: grid; gap: var(--cds-gap-md); grid-template-columns: repeat(auto-fill, minmax(min(100%, 21rem), 1fr)); }
+.vx-dim .vx-h { font-size: var(--cds-font-size-body); }
+.vx-tip { position: absolute; z-index: 20; max-width: min(24rem, calc(100% - 8px)); background: var(--cds-surface-popover); border: 1px solid var(--cds-border); border-radius: var(--cds-radius); box-shadow: var(--cds-shadow-popover); padding: var(--cds-pad-xs) var(--cds-pad-sm); font-size: var(--cds-font-size-caption); line-height: 1.45; pointer-events: none; color: var(--color-fg); }
+.vx-tip[hidden] { display: none; }
+.vx-tip-t { color: var(--cds-text-secondary); margin-bottom: 2px; }
+.vx-tip-r { display: flex; align-items: center; gap: 6px; }
+.vx-tip-r i { width: 8px; height: 8px; border-radius: 2px; flex: none; }
+.vx-tip-r span { flex: 1; }
+.vx-tip-r b { font-weight: var(--cds-font-weight-medium); font-variant-numeric: tabular-nums; }
+.vx-tip p { margin: 4px 0 0; }
+.vx-fail { display: flex; align-items: center; justify-content: center; gap: 8px; min-height: inherit; height: 100%; color: var(--color-fg-muted); font-size: var(--cds-font-size-caption); }
+.vx-fail::before { content: ""; width: .375rem; height: .375rem; border-radius: 50%; background: var(--color-bad); }
+[data-dash-source-state=empty] { color: transparent; }
+[data-dash-source-state=refreshing] { opacity: .5; transition: opacity var(--cds-dur-slow); }
+@media (prefers-reduced-motion: no-preference) { .vx-page:not([hidden]) { animation: vxin var(--cds-dur-slow) var(--cds-ease-out) 1; } @keyframes vxin { from { opacity: 0; } to { opacity: 1; } } }
+</style>
+
+<div class="vx" id="vx">
+  <header class="vx-head" id="topo">
+    <div class="vx-kicker">Auditoria MECE (23 Frentes · Censo 100% BWeb/CEFT 2ºT + Painel 2014–2026: 3,71M urnas) · Lula × Flávio Bolsonaro</div>
+    <h1 class="vx-title">Veredito do 2º turno</h1>
+    <p class="vx-take">Nenhuma das <b data-source="placar" data-field="n" data-where="veredito=Testadas" class="dash-skeleton">—</b> hipóteses que os dados alcançam explica a margem de <b data-source="provas" data-field="v" data-where="caso=nac&amp;k=margem" class="dash-skeleton">—</b> votos (<b data-source="placar" data-field="n" data-where="veredito=Excluído" class="dash-skeleton">—</b> excluídas, <b data-source="placar" data-field="n" data-where="veredito=Improvável" class="dash-skeleton">—</b> improvável); <b data-source="placar" data-field="n" data-where="veredito=Possível" class="dash-skeleton">—</b> ficam fora do alcance deles e <b data-source="placar" data-field="n" data-where="veredito=Provável" class="dash-skeleton">—</b> são prováveis.</p>
+  </header>
+
+  <nav class="vx-tabs" role="tablist" aria-label="Páginas">
+    <button class="vx-tab" role="tab" id="tab-veredito" data-tab="veredito" aria-selected="true">Veredito</button>
+    <button class="vx-tab" role="tab" id="tab-provas" data-tab="provas" aria-selected="false">Provas, caso a caso</button>
+    <button class="vx-tab" role="tab" id="tab-explorar" data-tab="explorar" aria-selected="false">Explorar recortes</button>
+  </nav>
+
+  <section class="vx-page vx-stack" id="veredito" role="tabpanel" aria-labelledby="tab-veredito">
+    <div class="vx-kpis" id="kpis">
+      <div class="vx-kpi" id="kpi-margem" tabindex="0"><span class="vx-kpi-l">Margem de Lula</span><span class="vx-kpi-v dash-skeleton" data-source="provas" data-field="v" data-where="caso=nac&amp;k=margem">—</span><span class="vx-kpi-s">votos válidos</span></div>
+      <div class="vx-kpi ok" id="kpi-excl" tabindex="0"><span class="vx-kpi-l">Excluídas</span><span class="vx-kpi-v dash-skeleton" data-source="placar" data-field="n" data-where="veredito=Excluído">—</span><span class="vx-kpi-s">os dados descartam</span></div>
+      <div class="vx-kpi imp" id="kpi-imp" tabindex="0"><span class="vx-kpi-l">Improváveis</span><span class="vx-kpi-v dash-skeleton" data-source="placar" data-field="n" data-where="veredito=Improvável">—</span><span class="vx-kpi-s">teste fraco demais para descartar</span></div>
+      <div class="vx-kpi warn" id="kpi-poss" tabindex="0"><span class="vx-kpi-l">Possíveis</span><span class="vx-kpi-v dash-skeleton" data-source="placar" data-field="n" data-where="veredito=Possível">—</span><span class="vx-kpi-s">fora do alcance dos dados</span></div>
+      <div class="vx-kpi bad" id="kpi-prov" tabindex="0"><span class="vx-kpi-l">Prováveis</span><span class="vx-kpi-v dash-skeleton" data-source="placar" data-field="n" data-where="veredito=Provável">—</span><span class="vx-kpi-s">os dados apontam</span></div>
+      <div class="vx-kpi" id="kpi-teto" tabindex="0"><span class="vx-kpi-l">Maior teto medido</span><span class="vx-kpi-v dash-skeleton" data-source="teto_max" data-field="pct" data-row="0">—</span><span class="vx-kpi-s" id="kpi-teto-s">do necessário para virar</span></div>
+    </div>
+
+    <article class="vx-card" id="matriz">
+      <div class="vx-card-h"><h2 class="vx-h">Quadro MECE: cada etapa da eleição, cada hipótese</h2></div>
+      <p class="vx-note">Linhas cobrem a eleição do cadastro à soma final, sem sobreposição. Passe o mouse para o resumo; clique para ver a prova.</p>
+      <div class="vx-mxwrap"><div class="vx-mx dash-skeleton" id="mx" data-source="casos placar"></div></div>
+      <div class="vx-leg" id="mx-leg"></div>
+    </article>
+
+    <article class="vx-card" id="regua">
+      <div class="vx-card-h"><h2 class="vx-h">Quanto cada hipótese poderia mover, no máximo</h2></div>
+      <p class="vx-note">Teto de votos de cada hipótese medida, em % dos votos necessários para virar. A linha vermelha é a virada.</p>
+      <div class="vx-viz dash-skeleton" id="regua-viz" data-source="casos"></div>
+    </article>
+
+    <article class="vx-card" id="virada">
+      <div class="vx-card-h"><h2 class="vx-h">A virada sem fraude</h2></div>
+      <p class="vx-note">Diferença Lula − Flávio no 1º e no 2º turno, e o que cada um ganhou entre os turnos.</p>
+      <div class="vx-viz dash-skeleton" id="virada-viz" data-source="virada"></div>
+      <p class="vx-note" style="margin:var(--cds-gap-sm) 0 0">Em disputa entre os turnos: <b class="dash-skeleton" data-source="virada" data-field="v" data-where="k=disputa">—</b> votos (outros candidatos do 1º turno e válidos a mais). Lula ficou com <b class="dash-skeleton" data-source="virada" data-field="v" data-where="k=share">—</b>.</p>
+    </article>
+  </section>
+
+  <section class="vx-page" id="provas" role="tabpanel" aria-labelledby="tab-provas" hidden>
+    <div class="vx-leg" id="provas-leg" style="margin:0 0 var(--cds-gap-md)"></div>
+    <div id="provas-body" class="dash-skeleton" data-source="casos provas secoes norte" style="min-height:240px"></div>
+  </section>
+
+  <section class="vx-page vx-stack" id="explorar" role="tabpanel" aria-labelledby="tab-explorar" hidden>
+    <article class="vx-card" id="recorte">
+      <p class="vx-note" style="margin-bottom:var(--cds-gap-sm)">Se houvesse fraude concentrada num grupo de seções, Lula ganharia ali mais do que no resto da própria cidade, e o ponto sairia do zero. Escolha um recorte abaixo ou clique em qualquer linha.</p>
+      <div class="vx-slice"><span class="vx-slice-n" id="slice-name">—</span><button class="vx-btn" id="slice-clear" hidden>Limpar recorte ×</button></div>
+      <div class="vx-presets" id="presets" data-source="dims"></div>
+      <div class="vx-hero" id="hero"></div>
+    </article>
+    <div id="dims-body" class="dash-skeleton" data-source="cortes dims" style="min-height:240px"></div>
+  </section>
+
+  <div class="vx-tip" role="tooltip" hidden></div>
+</div>
+<p class="vx-foot">Dados: 23 Frentes MECE · Censo 100% do TSE em 2026 (499.205 BUs em BWeb 2ºT × 1ºT, 499.207 seções em CEFT 2ºT e CESP 2ºT, 8,63M liberações sem biometria 2ºT vs. 8,34M 1ºT, 158,75M eleitores, 9,53M RAE, 2,49M transferências, 94.056 escolas/GPS, 5,03M linhas de log GEDAI-UE 1ºT+2ºT com 4.333 envelopes <code>.vsc</code>, 67,86M registros multi-cargo, 2,10M registros TPM/custódia), Painel Longitudinal 2014–2026 (3,71M urnas em 8 turnos; 461.219 seções pareadas 2022×2026) + BUs/Logs/RDVs binários. Detalhes técnicos no botão <b>i</b> e nos tooltips.</p>
+</div>
+<script src="shim.js"></script>
+<script src="vx.js"></script>
+</body>
+</html>
